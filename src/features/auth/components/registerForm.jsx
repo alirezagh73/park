@@ -2,6 +2,7 @@ import {useForm} from "react-hook-form";
 import {useActionData, useNavigate, useNavigation, useRouteError, useSubmit} from "react-router-dom";
 import {useEffect} from "react";
 import {toast} from "react-toastify";
+import {TextField} from "@/components/textField/textField.jsx";
 
 const RegisterForm = () => {
     const submitForm = useSubmit()
@@ -15,12 +16,12 @@ const RegisterForm = () => {
 
 
     const {register, handleSubmit, reset, formState: {errors}} = useForm()
-
+    console.log(errors)
     useEffect(() => {
         if (isSuccessOperation) {
             reset()
             setTimeout(() => {
-                navigate("/validate")
+                navigate("/verify")
             }, 1000)
         }
     }, [isSuccessOperation])
@@ -41,14 +42,14 @@ const RegisterForm = () => {
         <form onSubmit={handleSubmit(onSubmit)}
               className='flex max-w-6xl mx-auto bg-white flex-col gap-y-8 flex-wrap border border-gray-300 shadow-xl p-8 rounded-lg'>
             <div className='flex gap-x-8 flex-col gap-y-4 sm:flex-row'>
-                <div className="basis-1/2 relative">
-                    <label htmlFor="name">نام*</label>
-                    <input className="w-full border border-gray-300 mt-2 px-2 py-2 rounded-lg"
-                           {...register("name", {
-                               required: "نام اجباری است!"
-                           })}
-                           type="text" name="name"
-                           id="name"/>
+                <TextField name="name" label="نام*" register={register} validationSchema={{
+                    required: "نام اجباری است!"
+                }}
+                           type="text"
+                           id="name"
+                           textFiledClasses="basis-1/2 relative"
+                           inputClasses="w-full border border-gray-300 mt-2 px-2 py-2 rounded-lg"
+                >
                     {
                         errors.name && errors.name.type === "required" && (
                             <span className='text-xs text-red-500 absolute right-0 -bottom-6'>
@@ -56,15 +57,19 @@ const RegisterForm = () => {
                             </span>
                         )
                     }
-                </div>
-                <div className="basis-1/2 relative">
-                    <label htmlFor="lastname">نام خانوادگی*</label>
-                    <input className="w-full border border-gray-300 mt-2 px-2 py-2 rounded-lg"
-                           {...register("lastname", {
-                               required: "نام خانوادگی اجباری است!"
-                           })}
-                           type="text" name="lastname"
-                           id="lastname"/>
+                </TextField>
+
+                <TextField
+                    name="lastname"
+                    id="lastname"
+                    type="text"
+                    label={"نام خانوادگی*"}
+                    register={register}
+                    validationSchema={{
+                        required: "نام خانوادگی اجباری است!"
+                    }}
+                    textFiledClasses="basis-1/2 relative"
+                    inputClasses="w-full border border-gray-300 mt-2 px-2 py-2 rounded-lg">
                     {
                         errors.lastname && errors.lastname.type === "required" && (
                             <span className='text-xs text-red-500 absolute right-0 -bottom-6'>
@@ -72,19 +77,25 @@ const RegisterForm = () => {
                             </span>
                         )
                     }
-                </div>
+                </TextField>
+
             </div>
             <div className='flex gap-x-8 flex-col gap-y-4 sm:flex-row'>
-                <div className="basis-1/2 relative">
-                    <label htmlFor="idcard">کد ملی*</label>
-                    <input className="w-full border border-gray-300 mt-2 px-2 py-2 rounded-lg"
-                           {...register("idcard", {
-                               required: "کد ملی اجباری است!",
-                               minLength: 10,
-                               maxLength: 10
-                           })}
-                           type="text" name="idcard"
-                           id="idcard"/>
+
+                <TextField
+                    label="کد ملی*"
+                    name="idcard"
+                    id="idcard"
+                    type={"number"}
+                    inputClasses="w-full border border-gray-300 mt-2 px-2 py-2 rounded-lg"
+                    textFiledClasses="basis-1/2 relative"
+                    register={register}
+                    validationSchema={{
+                        required: "کد ملی اجباری است!",
+                        minLength: 10,
+                        maxLength: 10
+                    }}
+                >
                     {
                         errors.idcard && errors.idcard.type === "required" && (
                             <span className='text-xs text-red-500 absolute right-0 -bottom-6'>
@@ -100,19 +111,22 @@ const RegisterForm = () => {
                             </span>
                         )
                     }
-                </div>
-                <div className="basis-1/2 relative">
-                    <label htmlFor="phone">شماره تلفن ثابت*</label>
-                    <input className="w-full border border-gray-300 mt-2 px-2 py-2 rounded-lg"
-                           placeholder="مثال‌ : 02112345678"
-                           {...register("phone", {
+                </TextField>
+
+                <TextField name="phone"
+                           id="phone"
+                           type="number"
+                           register={register}
+                           validationSchema={{
                                required: "تلفن ثابت اجباری است!",
                                maxLength: 11,
                                minLength: 11
-                           })}
-                           type="text" name="phone"
-                           id="phone"/>
-
+                           }}
+                           label="شماره تلفن ثابت*"
+                           inputClasses="w-full border border-gray-300 mt-2 px-2 py-2 rounded-lg"
+                           textFiledClasses="basis-1/2 relative"
+                           placeholder="مثال : 02112345678"
+                >
                     {
                         errors.phone && errors.phone.type === "required" && (
                             <span className='text-xs text-red-500 absolute right-0 -bottom-6'>
@@ -128,21 +142,26 @@ const RegisterForm = () => {
                             </span>
                         )
                     }
-                </div>
+                </TextField>
+
             </div>
 
             <div className='flex gap-x-8 flex-col gap-y-4 sm:flex-row'>
-                <div className="basis-1/2 relative">
-                    <label htmlFor="mobile">شماره همراه*</label>
-                    <input className="w-full border border-gray-300 mt-2 px-2 py-2 rounded-lg"
-                           placeholder="مثال : 09121112233"
-                           {...register("mobile", {
+
+                <TextField name="mobile"
+                           id="mobile"
+                           register={register}
+                           validationSchema={{
                                required: "موبایل اجباری است!",
                                maxLength: 11,
                                minLength: 11
-                           })}
-                           type="text" name="mobile"
-                           id="mobile"/>
+                           }}
+                           inputClasses="w-full border border-gray-300 mt-2 px-2 py-2 rounded-lg"
+                           textFiledClasses="basis-1/2 relative"
+                           type="number"
+                           label="شماره موبایل*"
+                           placeholder="مثال : 09121112233"
+                >
                     {
                         errors.mobile && errors.mobile.type === "required" && (
                             <span className='text-xs text-red-500 absolute right-0 -bottom-6'>
@@ -154,24 +173,29 @@ const RegisterForm = () => {
                     {
                         errors.mobile && (errors.mobile.type === "maxLength" || errors.mobile.type === "minLength") && (
                             <span className='text-xs text-red-500 absolute right-0 -bottom-6'>
-                               شماره تلفن ثابت باید ۱۱ رقمی باشد!
+                               شماره موبایل باید ۱۱ رقمی باشد!
                             </span>
                         )
                     }
-                </div>
-                <div className="basis-1/2 relative">
-                    <label htmlFor="email">پست الکترونیک*</label>
-                    <input className="w-full border border-gray-300 mt-2 px-2 py-2 rounded-lg"
-                           {...register("email", {
-                               required: "پست الکترونیک اجباری است!",
-                               pattern: {
-                                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                   message: "invalid email address"
-                               }
-                           })}
-                           type="text" name="email"
-                           id="email"/>
+                </TextField>
 
+                <TextField
+                    name="email"
+                    id="email"
+                    register={register}
+                    validationSchema={{
+                        required: "پست الکترونیک اجباری است!",
+                        pattern: {
+                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                            message: "invalid email address"
+                        }
+                    }}
+                    label={"پست الکترونیک*"}
+                    type={"text"}
+                    textFiledClasses="basis-1/2 relative"
+                    inputClasses="w-full border border-gray-300 mt-2 px-2 py-2 rounded-lg"
+
+                >
                     {
                         errors.email && errors.email.type === "required" && (
                             <span className='text-xs text-red-500 absolute right-0 -bottom-6'>
@@ -187,7 +211,8 @@ const RegisterForm = () => {
                             </span>
                         )
                     }
-                </div>
+                </TextField>
+
             </div>
 
             <button disabled={isSubmitting} type="submit"

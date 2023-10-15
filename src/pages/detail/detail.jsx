@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 
-const Home = () => {
+const Detail = () => {
     return (
         <div className='flex relative  min-h-screen  2xl:max-w-[1536px]  '>
             <div className="w-full h-full brightness-50 absolute bg-park-bg bg-no-repeat bg-cover">
@@ -30,4 +30,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default Detail;

@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
 
-const Validator = () => {
+const Verify = () => {
     const navigate = useNavigate()
     const [inp1, setInp1] = useState(null)
     const [inp2, setInp2] = useState(null)
@@ -33,7 +33,7 @@ const Validator = () => {
             const myCode = `${inp1}${inp2}${inp3}${inp4}`
 
             if (+myCode === +code){
-                navigate("/products")
+                navigate("/")
             }else{
                 toast.error("کد صحیح نمیباشد!")
             }
@@ -76,4 +76,4 @@ const Validator = () => {
     );
 };
 
-export default Validator;
+export default Verify;

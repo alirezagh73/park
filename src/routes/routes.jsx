@@ -1,14 +1,14 @@
 import {createBrowserRouter} from "react-router-dom";
-import Home from "@/pages/home/home.jsx";
+import Detail from "@/pages/detail/detail.jsx";
 import Register from "@/pages/register/register.jsx";
-import Validator from "@/pages/validator/validator.jsx";
+import Verify from "@/pages/verify/verify.jsx";
 import {registerAction} from "@/routes/actions/registerAction.jsx";
 import Products from "@/pages/products/products.jsx";
 
 const routes = createBrowserRouter([
     {
-        path: "/",
-        element: <Home/>
+        path: "/detail",
+        element: <Detail/>
     },
     {
         path: "/register",
@@ -17,11 +17,11 @@ const routes = createBrowserRouter([
         errorElement : <Register />
     },
     {
-        path: "/validate",
-        element: <Validator/>
+        path: "/verify",
+        element: <Verify/>
     },
     {
-        path : "/products",
+        path : "/",
         element : <Products/>
     }
 ])
