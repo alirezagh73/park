@@ -3,6 +3,7 @@ import {useActionData, useNavigate, useNavigation, useRouteError, useSubmit} fro
 import {useEffect} from "react";
 import {toast} from "react-toastify";
 import {TextField} from "@/components/textField/textField.jsx";
+import Button from "@/components/button/button.jsx";
 
 const RegisterForm = () => {
     const submitForm = useSubmit()
@@ -16,9 +17,10 @@ const RegisterForm = () => {
 
 
     const {register, handleSubmit, reset, formState: {errors}} = useForm()
-    console.log(errors)
+
     useEffect(() => {
         if (isSuccessOperation) {
+
             reset()
             setTimeout(() => {
                 navigate("/verify")
@@ -215,12 +217,10 @@ const RegisterForm = () => {
 
             </div>
 
-            <button disabled={isSubmitting} type="submit"
-                    className='bg-green-500 disabled:bg-green-200 text-white self-center py-3 px-6 rounded-lg hover:bg-green-600'>
-                {
-                    isSubmitting ? "در حال انجام ..." : "عضویت"
-                }
-            </button>
+            <Button loading={isSubmitting} type={"submit"}
+                    text={"عضویت"} loadingText="در حال انجام ..."
+                    btnClasses='bg-green-500 disabled:bg-green-200 text-white self-center py-3 px-6 rounded-lg hover:bg-green-600'/>
+
         </form>
     );
 };

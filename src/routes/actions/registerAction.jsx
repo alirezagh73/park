@@ -6,7 +6,7 @@ export const registerAction = async ({request}) => {
 
     const data = Object.fromEntries(formData)
 
-    console.log(data)
+
     const res = await axios.post("https://beta-ubi-api.techpark.ir/api/v1/admin-api/processes/64f6cb145a97c362701f7193?apiKey=2140a1236748fd15d72f5e9f5649fbde", {
         message: "This case is started from REST-API",
         variables: [
